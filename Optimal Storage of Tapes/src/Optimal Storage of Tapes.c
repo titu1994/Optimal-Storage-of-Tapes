@@ -14,6 +14,7 @@
 typedef struct Tape {
 	int length;
 	int pos;
+	int machine;
 }Tape;
 
 
@@ -27,11 +28,13 @@ int compare(const void *a, const void *b) {
 
 int main(void) {
 	Tape *tape = NULL;
-	int i,n;
+	int i,n, m = 0, mach;
 
 	setbuf(stdout, NULL);
 	printf("Enter the number of tapes : ");
 	scanf("%d", &n);
+	printf("Enter the number of machines : ");
+	scanf("%d", &mach);
 
 	tape = (Tape*) calloc(n, sizeof(Tape));
 
@@ -40,13 +43,15 @@ int main(void) {
 		printf("Tape %d :", i+1);
 		scanf("%d", &tape[i].length);
 		tape[i].pos = i+1;
+		tape[i].machine = m+1;
+		m = (m+1) % mach;
 	}
 
 	qsort(tape, n, sizeof(Tape), compare);
 
 	printf("The optimal tape storage is : \n");
 	for(i = 0; i < n; i++) {
-		printf("Tape : %d - Length : %d\n", tape[i].pos, tape[i].length);
+		printf("Tape : %d - Length : %d Machine : %d\n", tape[i].pos, tape[i].length, tape[i].machine);
 	}
 	return EXIT_SUCCESS;
 }
