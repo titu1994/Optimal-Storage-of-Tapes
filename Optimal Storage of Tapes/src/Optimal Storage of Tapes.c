@@ -43,11 +43,15 @@ int main(void) {
 		printf("Tape %d :", i+1);
 		scanf("%d", &tape[i].length);
 		tape[i].pos = i+1;
-		tape[i].machine = m+1;
-		m = (m+1) % mach;
+
 	}
 
 	qsort(tape, n, sizeof(Tape), compare);
+
+	for(i = 0; i < n; i++) {
+		tape[i].machine = m+1;
+		m = (m+1) % (mach);
+	}
 
 	printf("The optimal tape storage is : \n");
 	for(i = 0; i < n; i++) {
